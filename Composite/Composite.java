@@ -6,6 +6,7 @@ import utiles.TecladoIn;
 
 public class Composite {
     private static int identificador = 0;
+    //Hola 
 
     public static void main(String[] args) {
         ArrayList<Tag> tags = new ArrayList<>();
