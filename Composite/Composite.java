@@ -32,7 +32,7 @@ public class Composite {
                     } else {
                         System.out.println("Ingrese El id del nuevo tag");
                         id = in.nextInt();
-                        padre.add(new Tag("div", id));
+                        ((Tag) padre).add(new Tag("div", id));
                     }
                     break;
                 }
@@ -43,9 +43,11 @@ public class Composite {
                     if (padre.getNombre() == "texto") {
                         System.out.println("NO ES POSIBLE AGREGAR UN TEXTO DENTRO DE TEXTO");
                     } else {
+                        System.out.println("Ingrese El texto");
+                        String texto = in.next();
                         System.out.println("Ingrese El id del nuevo tag");
-                        String texto = in.nextLine();
-                        padre.add(new Text("texto", texto));
+                        int idText = in.nextInt();
+                        ((Tag) padre).add(new Text("p", texto, idText));
                     }
                     break;
                 }
@@ -55,8 +57,8 @@ public class Composite {
                     CompositeElement padre = body.buscarTag(id);
                     System.out.println("Ingrese El id del elemento que desea eliminar");
                     int idHijo = in.nextInt();
-                    CompositeElement hijo = padre.buscarTag(idHijo);
-                    padre.eliminarTag(hijo);
+                    CompositeElement hijo = ((Tag) padre).buscarTag(idHijo);
+                    ((Tag) padre).eliminarTag(hijo);
                     break;
                 }
                 case 4:
