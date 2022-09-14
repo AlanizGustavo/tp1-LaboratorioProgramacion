@@ -45,7 +45,7 @@ public class Composite {
                     } else {
                         System.out.println("Ingrese El id del nuevo tag");
                         String texto = in.nextLine();
-                        padre.addText(new Text("texto", texto));
+                        padre.add(new Text("texto", texto));
                     }
                     break;
                 }

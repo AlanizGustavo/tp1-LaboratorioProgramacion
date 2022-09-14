@@ -20,10 +20,6 @@ abstract class CompositeElement {
         children.add(child);
     }
 
-    public void addText(CompositeElement child) {
-        children.add(child);
-    }
-
     public String randerizar() {
         String resultado = "\n<" + tagName + " id=" + id + ">\n";
         for (CompositeElement child : children) {
