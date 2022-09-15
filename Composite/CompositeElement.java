@@ -13,9 +13,7 @@ abstract class CompositeElement {
         this.tagName = nombre;
     }
 
-    public String randerizar() {
-        return "";
-    }
+    public abstract String randerizar();
 
     public int getId() {
         return this.id;

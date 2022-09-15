@@ -23,9 +23,9 @@ class Text extends CompositeElement {
     }
 
     public String randerizar() {
-        String resultado = "\n<" + tagName + " id=" + id + ">\n";
+        String resultado = "<" + tagName + " id=" + id + ">\n";
         resultado += this.texto;
-        resultado += "\n</" + tagName + ">";
+        resultado += "\n</" + tagName + ">\n";
         return resultado;
     }
 }

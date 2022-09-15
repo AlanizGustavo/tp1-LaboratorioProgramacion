@@ -38,7 +38,7 @@ class Tag extends CompositeElement {
     }
 
     public String randerizar() {
-        String resultado = "\n<" + tagName + " id=" + id + ">\n";
+        String resultado = "<" + tagName + " id=" + id + ">\n";
         for (CompositeElement child : children) {
             resultado += child.randerizar();
         }
