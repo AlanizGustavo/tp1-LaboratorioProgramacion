@@ -13,6 +13,5 @@ class Recordatorio implements Runnable {
     public void run() {
         System.out.println("¡TOMAR PASTILLA! " + pastilla.getNombre() +
                 " - Hora actual: " + new Timestamp(System.currentTimeMillis()));
-
     }
 }
