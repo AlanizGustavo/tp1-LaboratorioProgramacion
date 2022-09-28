@@ -27,4 +27,8 @@ abstract class CompositeElement {
         return false;
     }
 
+    public CompositeElement buscarTag(int id) {
+        return null;
+    }
+
 }

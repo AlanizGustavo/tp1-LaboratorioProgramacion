@@ -33,8 +33,8 @@ public class Composite {
                     if (nuevoId == 1) {
                         padre = body;
                     } else {
-                        System.out.println("BUSCANDO ID DEL PADRE");
-                        padre = buscarTag();
+                        System.out.print("Ingrese el id del padre: ");
+                        padre = buscarTagPadre(body);
                     }
                     // Ahora agregamos el div
                     if (padre != null) {
@@ -53,8 +53,8 @@ public class Composite {
                     if (nuevoId == 1) {
                         padre = body;
                     } else {
-                        System.out.println("BUSCANDO ID DEL PADRE");
-                        padre = buscarTag();
+                        System.out.println("Ingrese el id del padre: ");
+                        padre = buscarTagPadre(body);
                     }
                     // Ahora agregamos el texto
                     if (padre != null) {
@@ -65,22 +65,20 @@ public class Composite {
                             String texto = in.next();
                             ((Tag) padre).add(new Text(etiquetaP, texto, nuevoId++));
                         }
+                    } else {
+                        System.out.println("No se encontro el tag");
                     }
                 }
                 case 3 -> {
-                    System.out.println("BUSCANDO ID PARA BORRAR");
-                    CompositeElement buscado = buscarTag();
-                    if (buscado != null) {
-                        if (buscado.getNombre().equals(etiquetaBody)) {
-                            System.out.println("Seguro que desea eliminar el body? (s/n)");
-                            String respuesta = in.next();
-                            if (respuesta.equals("s") || respuesta.equals("S")) {
-                                body = new Tag(etiquetaBody, 0);
-                                opcion = 5;
-                            }
-                        } else {
-                            ((Tag) buscado).eliminarTag(buscarTag());
-                        }
+                    System.out.print("Ingrese el id del padre del tag a eliminar: ");
+                    CompositeElement padre = buscarTagPadre(body);
+                    if (padre != null && !padre.isText()) {
+                        System.out.print("Ingrese el id del tag a eliminar: ");
+                        int id = in.nextInt();
+                        CompositeElement hijo = padre.buscarTag(id);
+                        ((Tag) padre).eliminarTag(hijo);
+                    } else {
+                        System.out.println("No se encontro el tag o es un texto");
                     }
                 }
                 case 4 -> {
@@ -92,13 +90,13 @@ public class Composite {
                     break;
                 }
             }
-        } while (opcion < 4);
+            System.out.println("*****************************************");
+        } while (opcion <= 4);
 
     }
 
-    public static CompositeElement buscarTag() {
-        System.out.print("Ingrese El id del tag: ");
-        return body.buscarTag(in.nextInt());
+    public static CompositeElement buscarTagPadre(CompositeElement padre) {
+        return ((Tag) padre).buscarTag(in.nextInt());
     }
 
     public static void ejemploArmado(Tag body) {

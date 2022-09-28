@@ -13,6 +13,10 @@ class Tag extends CompositeElement {
         children.add(child);
     }
 
+    public boolean isText() {
+        return false;
+    }
+
     public CompositeElement buscarTag(int id) {
         boolean encontrado = false;
         CompositeElement buscado = null;
@@ -25,7 +29,7 @@ class Tag extends CompositeElement {
                     encontrado = true;
                     buscado = this.children.get(i);
                 } else {
-                    buscado = ((Tag) this.children.get(i)).buscarTag(id);
+                    buscado = (this.children.get(i)).buscarTag(id);
                 }
                 i++;
             }
