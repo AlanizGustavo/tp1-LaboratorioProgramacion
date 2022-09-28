@@ -10,5 +10,4 @@ class Pastilla {
     public String getNombre() {
         return nombre;
     }
-
 }
