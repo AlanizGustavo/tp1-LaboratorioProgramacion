@@ -3,10 +3,14 @@ package Composite;
 import java.util.Scanner;
 
 public class Composite {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    static String etiquetaBody = "body";
+    static String etiquetaP = "p";
+    static String etiquetaDiv = "div";
+    static int nuevoId = 0;
+    static Scanner in = new Scanner(System.in);
+    static Tag body = new Tag(etiquetaBody, nuevoId++);
 
-        Tag body = new Tag("body", 0);
+    public static void main(String[] args) {
 
         int opcion;
         do {
@@ -23,50 +27,66 @@ public class Composite {
 
             opcion = in.nextInt();
             switch (opcion) {
-                case 1: {
-                    System.out.println("Ingrese El id del tag al que desea agregarlo");
-                    int id = in.nextInt();
-                    CompositeElement padre = body.buscarTag(id);
-                    System.out.println(padre.getNombre());
-                    if (padre.getNombre() == "texto") {
-                        System.out.println("NO ES POSIBLE AGREGAR UN DIV DENTRO DE TEXTO");
+                case 1 -> {
+                    CompositeElement padre;
+                    // Buscamos el padre
+                    if (nuevoId == 1) {
+                        padre = body;
                     } else {
-                        System.out.println("Ingrese El id del nuevo tag");
-                        id = in.nextInt();
-                        ((Tag) padre).add(new Tag("div", id));
+                        System.out.println("BUSCANDO ID DEL PADRE");
+                        padre = buscarTag();
                     }
-                    break;
-                }
-                case 2: {
-                    System.out.println("Ingrese El id del tag al que desea agregarlo");
-                    int id = in.nextInt();
-                    CompositeElement padre = body.buscarTag(id);
-                    if (padre.getNombre() == "texto") {
-                        System.out.println("NO ES POSIBLE AGREGAR UN TEXTO DENTRO DE TEXTO");
+                    // Ahora agregamos el div
+                    if (padre != null) {
+                        if (padre.getNombre().equals(etiquetaP)) {
+                            System.out.println("No se puede agregar un div a un texto");
+                        } else {
+                            ((Tag) padre).add(new Tag(etiquetaDiv, nuevoId++));
+                        }
                     } else {
-                        System.out.println("Ingrese El texto");
-                        String texto = in.next();
-                        System.out.println("Ingrese El id del nuevo tag");
-                        int idText = in.nextInt();
-                        ((Tag) padre).add(new Text("p", texto, idText));
+                        System.out.println("No se encontro el tag");
                     }
-                    break;
                 }
-                case 3: {
-                    System.out.println("Ingrese El id del tag al que desea eliminar un hijo");
-                    int id = in.nextInt();
-                    CompositeElement padre = body.buscarTag(id);
-                    System.out.println("Ingrese El id del elemento que desea eliminar");
-                    int idHijo = in.nextInt();
-                    CompositeElement hijo = ((Tag) padre).buscarTag(idHijo);
-                    ((Tag) padre).eliminarTag(hijo);
-                    break;
+                case 2 -> {
+                    CompositeElement padre;
+                    // Buscamos el padre
+                    if (nuevoId == 1) {
+                        padre = body;
+                    } else {
+                        System.out.println("BUSCANDO ID DEL PADRE");
+                        padre = buscarTag();
+                    }
+                    // Ahora agregamos el texto
+                    if (padre != null) {
+                        if (padre.getNombre().equals(etiquetaP)) {
+                            System.out.println("No se puede agregar un texto a un texto");
+                        } else {
+                            System.out.print("Ingrese El texto: ");
+                            String texto = in.next();
+                            ((Tag) padre).add(new Text(etiquetaP, texto, nuevoId++));
+                        }
+                    }
                 }
-                case 4: {
+                case 3 -> {
+                    System.out.println("BUSCANDO ID PARA BORRAR");
+                    CompositeElement buscado = buscarTag();
+                    if (buscado != null) {
+                        if (buscado.getNombre().equals(etiquetaBody)) {
+                            System.out.println("Seguro que desea eliminar el body? (s/n)");
+                            String respuesta = in.next();
+                            if (respuesta.equals("s") || respuesta.equals("S")) {
+                                body = new Tag(etiquetaBody, 0);
+                                opcion = 5;
+                            }
+                        } else {
+                            ((Tag) buscado).eliminarTag(buscarTag());
+                        }
+                    }
+                }
+                case 4 -> {
                     ejemploArmado(body);
-                    break;
                 }
-                case 5: {
+                case 5 -> {
                     System.out.println("Saliendo...");
                     System.out.println(body.randerizar());
                     break;
@@ -76,13 +96,18 @@ public class Composite {
 
     }
 
+    public static CompositeElement buscarTag() {
+        System.out.print("Ingrese El id del tag: ");
+        return body.buscarTag(in.nextInt());
+    }
+
     public static void ejemploArmado(Tag body) {
-        Tag div1 = new Tag("div", 1);
-        Tag div2 = new Tag("div", 2);
-        Tag div3 = new Tag("div", 3);
-        Tag div4 = new Tag("div", 4);
-        Text text1 = new Text("p", "unTexto", 5);
-        Text text2 = new Text("p", "otroTexto", 6);
+        Tag div1 = new Tag(etiquetaDiv, nuevoId++);
+        Tag div2 = new Tag(etiquetaDiv, nuevoId++);
+        Tag div3 = new Tag(etiquetaDiv, nuevoId++);
+        Tag div4 = new Tag(etiquetaDiv, nuevoId++);
+        Text text1 = new Text(etiquetaP, "texto 1", nuevoId++);
+        Text text2 = new Text(etiquetaP, "texto 2", nuevoId++);
 
         body.add(div1);
         body.add(div2);
